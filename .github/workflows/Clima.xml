@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="Clima.xsl"?>
+<clima>
+  <ciudad>Albacete</ciudad>
+  <fecha>24-04-2025 </fecha>
+   <hora>13:07:00</hora>
+  <temperatura>22</temperatura>
+  <condicion>Soleado</condicion>
+  <humedad>55%</humedad>
+  <viento>15 km/h</viento>
+</clima>

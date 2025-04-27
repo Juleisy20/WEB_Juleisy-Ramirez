@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario</title>
+    <link rel="stylesheet" href="estilo.css" />
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const formulario = document.querySelector("form");
+
+        formulario.addEventListener("submit", function (event) {
+          const nombre = document.getElementById("nombre").value.trim();
+          const correo = document.getElementById("correo").value.trim();
+          const telefono = document.getElementById("telefono").value.trim();
+          const experiencia = document.querySelector(
+            "input[name='experiencia']:checked"
+          );
+          const intereses = document.querySelectorAll(
+            "input[name='intereses[]']:checked"
+          );
+          const comentarios = document
+            .getElementById("comentarios")
+            .value.trim();
+          const edad = document.getElementById("edad").value;
+
+          if (nombre === "") {
+            alert("Por favor, ingresa tu nombre.");
+            event.preventDefault();
+            return;
+          }
+
+          if (
+            correo === "" ||
+            !correo.includes("@") ||
+            !correo.includes("gmail.com")
+          ) {
+            alert("Por favor, ingresa tu correo electrónico.");
+            event.preventDefault();
+            return;
+          }
+
+          if (telefono !== "" && isNaN(telefono)) {
+            alert("Por favor, ingresa un número de teléfono válido.");
+            event.preventDefault();
+            return;
+          }
+
+          if (!experiencia) {
+            alert("Por favor, selecciona tu nivel de experiencia.");
+            event.preventDefault();
+            return;
+          }
+
+          if (intereses.length === 0) {
+            alert("Por favor, selecciona al menos un tema de interés.");
+            event.preventDefault();
+            return;
+          }
+
+          if (comentarios.length > 500) {
+            alert(
+              "El campo de comentarios no puede exceder los 500 caracteres."
+            );
+            event.preventDefault();
+            return;
+          }
+
+          if (edad < 0 || edad > 120) {
+            alert("Por favor, ingresa una edad válida.");
+            event.preventDefault();
+            return;
+          }
+        });
+      });
+
+      function mostrarAnuncio() {
+        let edad = prompt("Por favor, introsuce tu edad");
+        edad= parseInt(edad)
+        if (isNaN(edad)) return;
+
+        let mensaje = "";
+        let imagen = "";
+
+        if (edad <= 18) {
+          mensaje = "¡Oferta especial! Consigue tu monopatín hoy mismo.";
+          imagen = "Imagenes/Monopatin.jpeg";
+        } else if (edad <= 40) {
+          mensaje = "¡Gran oportunidad! Compra tu coche al mejor precio.";
+          imagen = "Imagenes/Coche.jpg";
+        } else if (edad <= 100) {
+          mensaje = "¡Vacaciones en Benidorm! Disfruta del sol y la playa.";
+          imagen = "Imagenes/Vacaciones.jpeg";
+        } else {
+          mensaje =
+            "Edad fuera de rango, pero siempre tenemos ofertas para ti.";
+         
+        }
+
+        let nuevaventana = window.open("", "", "width=400,height=200");
+        nuevaventana.document.write(`
+        <html>
+        <head>
+            <style>
+                body {
+            
+                    background-color: palevioletred;
+                    color: white;
+                    text-align: center;
+                    padding: 20px;
+                }
+
+                h2 {
+                    font-size: 1.5em;
+                    margin-bottom: 20px;
+                    text-transform: uppercase;
+                    color: #fff;
+                }
+
+                p {
+                    font-size: 1.2em;
+                    line-height: 1.5;
+                    margin-top: 20px;
+                    color: #fff;
+                    padding: 10px;
+                    border-radius: 5px;
+                    background-color: rgba(255, 255, 255, 0.2); 
+
+                p:hover {
+                    background-color: #f1c6d3;
+                    cursor: pointer;
+                }
+            </style>
+        </head>
+        <body>
+            <h2>¡Publicidad!</h2>
+            <p>${mensaje}</p>
+            <img src = ${imagen} alt = "Imagen de la publicidad" width = "200" height = "200">
+        </body>
+        </html>
+    `);
+        document.addEventListener("DOMContentLoaded", function () {
+          document
+            .getElementById("edad")
+            .addEventListener("change", mostrarAnuncio);
+        });
+      }
+    </script>
+  </head>
+
+  <body onload="mostrarAnuncio()">
+    <div id="cabecera">
+      <h1>Formulario</h1>
+    </div>
+    <div id="izquierda">
+      <ul id="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="personal.html">Datos Personales</a></li>
+      </ul>
+    </div>
+    <div id="contenido">
+      <form action="procesamiento.php" method="get">
+        <h2>Información Personal</h2>
+        <br />
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required /><br /><br />
+
+        <label for="nombre">Apellidos:</label>
+        <input type="text" id="apellidos" name="apellidos" required /><br /><br />
+    
+        <label for="correo">Correo Electrónico:</label>
+        <input type="email" id="correo" name="correo" required /><br /><br />
+
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" /><br /><br />
+
+        <h2>Preferencias</h2>
+        <br />
+        <label>Selecciona tu nivel de experiencia:</label><br />
+        <input
+          type="radio"
+          id="principiante"
+          name="experiencia"
+          value="Principiante"
+        />
+        <label for="principiante">Principiante</label><br />
+        <input
+          type="radio"
+          id="intermedio"
+          name="experiencia"
+          value="Intermedio"
+        />
+        <label for="intermedio">Intermedio</label><br />
+        <input type="radio" id="avanzado" name="experiencia" value="Avanzado" />
+        <label for="avanzado">Avanzado</label><br /><br />
+
+        <label>Temas de interés:</label>
+        <br />
+        <input
+          type="checkbox"
+          id="programacion"
+          name="intereses[]"
+          value="Programación"
+        />
+        <label for="programacion">Programación</label><br />
+        <input
+          type="checkbox"
+          id="diseno"
+          name="intereses[]"
+          value="Diseño Web"
+        />
+        <label for="diseno">Diseño Web</label><br />
+        <input
+          type="checkbox"
+          id="seguridad"
+          name="intereses[]"
+          value="Ciberseguridad"
+        />
+        <label for="seguridad">Ciberseguridad</label><br />
+        <input
+          type="checkbox"
+          id="datos"
+          name="intereses[]"
+          value="Análisis de Datos"
+        />
+        <label for="datos">Análisis de Datos</label><br /><br />
+
+        <h2>Comentarios</h2>
+        <br />
+        <label for="comentarios">¿Tienes algo que añadir?</label><br />
+        <textarea
+          id="comentarios"
+          name="comentarios"
+          rows="5"
+          cols="50"
+        ></textarea
+        ><br /><br />
+
+        <button type="submit">Enviar</button>
+        <button type="reset">Limpiar Formulario</button>
+      </form>
+    </div>
+    <div id="pie">&copy; 2024 Curso Virtual</div>
+  </body>
+</html>
